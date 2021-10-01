@@ -93,7 +93,7 @@ Gestion
       "responsive": true,
     });
   });
-</script>
+</script> 
 @stop 
 
 </x-admin-component>

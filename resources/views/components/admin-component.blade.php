@@ -10,16 +10,18 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+  
+  <!-- DataTables  -->
   <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
-  <!-- DataTables -->
+  <!-- Bootstrap Tempus  -->
   <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
-  <!-- Tempusdominus Bootstrap 4 -->
-  @yield('CustomStyles')
   <!-- Custom Style -->
-  <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+  @yield('CustomStyles')
   <!-- Theme style -->
+  <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+  
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -236,10 +238,12 @@
 
 <!-- jQuery -->
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+
 <!-- Bootstrap 4 -->
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- Page specific script -->
- @yield('CustomScripts')
+
+@yield('CustomScripts')
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 
