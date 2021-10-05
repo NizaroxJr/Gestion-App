@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
     use HasFactory;
-
+    
+    protected $guarded = [];
+    
     function products(){
         return $this->belgonsToMany(Product::class);
     }

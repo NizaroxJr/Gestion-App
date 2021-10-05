@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +21,5 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ad
 
 //Products Routes//
 Route::middleware('auth')->group(function(){
-
-    Route::get('/products',function(){
-    
-        return view('admin.products.products');
-    })->name('products');
-
-    Route::get('/products/add',function(){
-    
-        return view('admin.products.addProduct');
-    })->name('products.add');
+   Route::resource('products',ProductsController::class);
 });

@@ -8,16 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-
-    function category(){
-        return $this->belgonsTo(Category::class);
+    
+    protected $guarded = [];
+    function categories(){
+        return $this->belongsToMany(Category::class);
     }
 
     function supplier(){
-        return $this->belgonsTo(Supplier::class);
+        return $this->belongsTo(Supplier::class);
     }
 
     function tags(){
-        return $this->belgonsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class);
     }
 }

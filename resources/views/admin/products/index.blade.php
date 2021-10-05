@@ -3,6 +3,8 @@
 Gestion
 @stop
 
+
+
 @section('content')
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -20,7 +22,7 @@ Gestion
 
         <div class="card">
               <div class="card-header">
-                <a href="{{route('products.add')}}"><button class="btn btn-primary"><i class="fas fa-plus"></i>Add Product</button></a>
+                <a href="{{route('products.create')}}"><button class="btn btn-primary"><i class="fas fa-plus"></i>Add Product</button></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -37,17 +39,22 @@ Gestion
                   </tr>
                   </thead>
                   <tbody>
+                    @foreach($products as $product)
                   <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
+                    <td></td>
+                    <td>{{$product->id}}</td>
+                    <td>{{$product->name}}</td>
+                    <td><span class="badge badge-primary">{{$product->quantity}}</span></td>
+                    <td>{{$product->price}}</td>
+                    <td><span class="badge badge-success">{{$product->status}}</span></td>
+                    <td>
+                      <a style="margin-right:20px" title="Product Details" href="{{route('products.show',$product->id)}}"><i class="far fa-eye"></i></a>
+                      <a style="margin-right:20px" title="Edit Product" href="{{route('products.edit',$product->id)}}"><i class="fas fa-edit"></i></a>
+                      <a style="margin-right:20px" title="Delete Product" href="{{route('products.destroy',$product->id)}}"><i class="fas fa-trash-alt"></i></a>
+                      <a  title="Clone Product" href="{{route('products.destroy',$product->id)}}"><i class="fa fa-copy"></i></a>
                     </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                    <td> 4</td>
-                    <td>X</td>
                   </tr>
+                  @endforeach
                 </tbody>
               </table>
               <!-- /.card-body -->
