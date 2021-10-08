@@ -23,7 +23,7 @@
             <div class="card mb-3" >
                <div class="row no-gutters">
                  <div class="col-lg-4 col-md-12">
-                   <img width="300px" src="{{asset('img/vitamine.jpg')}}" alt="...">
+                   <img width="300px" src="/images/{{$product->img}}" >
                  </div>
                  <div class="col-lg-8 col-md-12">
                    <div class="card-body">
@@ -45,7 +45,11 @@
                     </p>
                     <p class="card-text">
                        <span><strong>Supplier:</strong></span>
-                       <span>{{$product->supplier}}</span>
+                       <span>{{$supplier->name}}</span>
+                    </p>
+                    <p class="card-text">
+                       <span><strong>Category:</strong></span>
+                       <span>{{$category->name}}</span>
                     </p>
                     <p class="card-text">
                        <span><strong>Status:</strong></span>

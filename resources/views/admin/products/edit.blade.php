@@ -13,7 +13,7 @@ Add Product
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-         <h3><strong>Add Product</strong></h3>
+         <h3><strong>Edit Product</strong></h3>
       </div><!-- /.container-fluid -->
     </div>
 
@@ -26,22 +26,23 @@ Add Product
        <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Add Product</h3>
+                <h3 class="card-title">{{$product->name}}</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form id="addProduct" method="post" action="{{route('products.store')}}" enctype="multipart/form-data">
+              <form id="EditProduct" method="post" action="{{route('products.update',$product->id)}}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="card-body">
                   <div class="form-row">
                      <!-- Row Start-->
                   <div class="form-group col-lg-6 col-md-12">
                     <label for="ProductName">Product Name*</label>
-                    <input type="text" name="name" class="form-control" id="ProductName" placeholder="Enter Product Name"  required>
+                    <input type="text" name="name" class="form-control" id="ProductName" value="{{$product->name}}"  required>
                   </div>
                   <div class="form-group col-lg-6 col-md-12">
                     <label for="Quantity">Quantity</label>
-                    <input type="number" name="quantity"  class="form-control" id="Quantity" placeholder="" required>
+                    <input type="number" name="quantity"  class="form-control" id="Quantity" value="{{$product->quantity}}" required>
                   </div>
                  <!-- Row End-->
                 </div> 
@@ -49,14 +50,19 @@ Add Product
                      <!-- Row Start-->
                   <div class="form-group col-lg-6 col-md-12">
                     <label for="Price">Price</label>
-                    <input type="number" name="price"  class="form-control" id="Price" placeholder="" required>
+                    <input type="number" name="price"  class="form-control" id="Price" value="{{$product->price}}" required>
                   </div>
                   <div class="form-group col-lg-6 col-md-12">
                     <label for="Status">Status</label>
                     <select  id="status" name="status" class="form-control select2" style="width: 100%;" required>
+                    @if($product->status == "In Stock")
                     <option value="In Stock" selected="selected">In Stock</option>
                     <option value="Out Of Stock">Out Of Stock</option>
-                  </select>
+                    @else
+                    <option value="In Stock" >In Stock</option>
+                    <option value="Out Of Stock" selected="selected">Out Of Stock</option>
+                    @endif  
+                </select>
                   </div>
                 </div>
                  <!-- Row End-->  
@@ -64,7 +70,7 @@ Add Product
                      <!-- Row Start-->
                   <div class="form-group col-lg-6 col-md-12">
                     <label for="tag">Tags</label>
-                    <input data-role="tagsinput" type="text" name="tags"  class="form-control" id="tag" placeholder="" required>
+                    <input data-role="tagsinput" type="text" name="tags"  class="form-control" id="tag" value="{{$product->tags}}" required>
                   </div>
                   <div class="form-group col-lg-6 col-md-12">
                   <label for="supplier">Supplier</label>
@@ -95,13 +101,13 @@ Add Product
                  <!-- Row End--> 
                   <div class="form-group">
                     <label for="Description">Product Description</label>
-                    <textarea name="description" class="form-control" id="Description" rows="3"></textarea>
+                    <textarea name="description" class="form-control" id="Description"  rows="5">{{$product->description}}</textarea>
                   </div>
                 </div> 
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Add Product</button>
+                  <button type="submit" class="btn btn-primary">Edit Product</button>
                 </div>
               </form>
             </div>

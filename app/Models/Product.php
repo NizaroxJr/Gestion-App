@@ -10,15 +10,17 @@ class Product extends Model
     use HasFactory;
     
     protected $guarded = [];
-    function categories(){
-        return $this->belongsToMany(Category::class);
-    }
-
-    function supplier(){
-        return $this->belongsTo(Supplier::class);
-    }
 
     function tags(){
         return $this->belongsToMany(Tag::class);
+    }
+    
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
     }
 }

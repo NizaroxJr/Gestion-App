@@ -29,8 +29,10 @@ class ProductsController extends Controller
      */
     public function create()
     {
+        $suppliers=Supplier::all();
+        $categories=Category::all();
 
-        return view('admin.products.add');
+        return view('admin.products.add',compact('suppliers','categories'));
     }
 
     /**
@@ -41,40 +43,49 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //Persist Image To DB
-        $input = $request->all();
+        //Clone Product
+        if($request->input('id')){
+            $cloneProduct=Product::find($request->input('id'));
 
-        if($file = $request->file('img')){
-            $name=$file->getClientOriginalName();
-            $file->move('images',$name);
-            $input['img']=$name;
+            Product::create([
+            'name'=>$cloneProduct->name."(Copy)",
+            'price'=>$cloneProduct->price,
+            'quantity'=>$cloneProduct->quantity,
+            'description'=>$cloneProduct->description,
+            'status'=>$cloneProduct->status,
+            'tags'=>$cloneProduct->tags,
+             'img'=>$cloneProduct->img,
+             'supplier_id'=>$cloneProduct->supplier_id,
+             'category_id'=>$cloneProduct->category_id
+                           ]);
+          
         }
         
-        //Find Supplier/category ID
-        $supplier=Supplier::where('name','=',$request->input('supplier'));
-        $category=Category::where('title','=',$request->input('category'));
-
-        //Create New Product
-        $product=Product::create([
-            'name'=>$request->input('name'),
-            'price'=>$request->input('price'),
-            'quantity'=>$request->input('quantity'),
-            'description'=>$request->input('description'),
-            'status'=>$request->input('status'),
-            'supplier'=>$request->input('supplier'),
-            'tags'=>$request->input('tags'),
-             'img'=>$input['img'],
-             'supplier_id'=>$supplier
-          ]);
-        //Find Inserted Product
-        $product = $product->fresh();
-        //$product=Product::find($product['id']);
-
-        //Insert tag and product_tag 
-        $tag = new Tag(['title'=> $request->input('tags')]);
-        $product->tags()->save($tag);
-        //Insert product_category
-        $product->category()->save(['category_id'=>$category,'product_id'=>$product['id']]);
+        //Create Product
+        else{
+           //Persist Image To DB
+           $input = $request->all();
+   
+           if($file = $request->file('img')){
+               $name=$file->getClientOriginalName();
+               $file->move('images',$name);
+               $input['img']=$name;
+           }
+           
+           
+           $product=Product::create([
+               'name'=>$request->input('name'),
+               'price'=>$request->input('price'),
+               'quantity'=>$request->input('quantity'),
+               'description'=>$request->input('description'),
+               'status'=>$request->input('status'),
+               'supplier'=>$request->input('supplier'),
+               'tags'=>$request->input('tags'),
+                'img'=>$input['img'],
+                'supplier_id'=>$request->input('supplier'),
+                'category_id'=>$request->input('category')
+             ]);        
+        }
 
         return redirect()->route('products.index');
     }
@@ -88,7 +99,12 @@ class ProductsController extends Controller
     public function show($id)
     {
         $product=Product::find($id);
-        return view('admin.products.show',['product'=>$product]);
+
+       return view('admin.products.show',
+                   ['product'=>$product,
+                   'supplier'=>$product->supplier,
+                   'category'=>$product->category
+                   ]);
     }
 
     /**
@@ -99,7 +115,16 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product=Product::find($id);
+        $suppliers=Supplier::all();
+        $categories=Category::all();
+        
+        
+        return view('admin.products.edit',
+                   ['product'=>$product,
+                   'suppliers'=>$suppliers,
+                   'categories'=>$categories
+                   ]);
     }
 
     /**
@@ -111,7 +136,28 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Persist Image To DB
+        $input = $request->all();
+
+        if($file = $request->file('img')){
+            $name=$file->getClientOriginalName();
+            $file->move('images',$name);
+            $input['img']=$name;
+        }
+
+         
+        Product::where('id', $id)->update(['name'=>$request->input('name'),
+                                          'price'=>$request->input('price'),
+                                          'quantity'=>$request->input('quantity'),
+                                          'description'=>$request->input('description'),
+                                          'status'=>$request->input('status'),
+                                          'tags'=>$request->input('tags'),
+                                           'img'=>$input['img'],
+                                           'supplier_id'=>$request->input('supplier'),
+                                           'category_id'=>$request->input('category')
+                                        ]);
+
+         return redirect()->route('products.index');
     }
 
     /**
@@ -122,6 +168,8 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        Product::where('id', $id)->delete();
+        return redirect()->route('products.index');
     }
 }

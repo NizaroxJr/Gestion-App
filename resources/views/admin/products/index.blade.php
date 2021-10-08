@@ -1,6 +1,6 @@
 <x-admin-component>
 @section('title')
-Gestion
+Products
 @stop
 
 
@@ -41,17 +41,29 @@ Gestion
                   <tbody>
                     @foreach($products as $product)
                   <tr>
-                    <td></td>
+                    <td><img width="100" src="/images/{{$product->img}}" alt=""></td>
                     <td>{{$product->id}}</td>
                     <td>{{$product->name}}</td>
                     <td><span class="badge badge-primary">{{$product->quantity}}</span></td>
                     <td>{{$product->price}}</td>
+                    @if($product->status == "In Stock")
                     <td><span class="badge badge-success">{{$product->status}}</span></td>
+                    @else
+                    <td><span class="badge badge-danger">{{$product->status}}</span></td>                    
+                    @endif
                     <td>
                       <a style="margin-right:20px" title="Product Details" href="{{route('products.show',$product->id)}}"><i class="far fa-eye"></i></a>
                       <a style="margin-right:20px" title="Edit Product" href="{{route('products.edit',$product->id)}}"><i class="fas fa-edit"></i></a>
-                      <a style="margin-right:20px" title="Delete Product" href="{{route('products.destroy',$product->id)}}"><i class="fas fa-trash-alt"></i></a>
-                      <a  title="Clone Product" href="{{route('products.destroy',$product->id)}}"><i class="fa fa-copy"></i></a>
+                      <form  method="post" action="{{route('products.store')}}" title="Clone Product" style="display:inline-block;" enctype="multipart/form-data">
+                        @csrf
+                        <input  name="id" type="hidden" value="{{$product->id}}">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-copy"></i></button>
+                      </form>
+                      <form method="post" action="{{route('products.destroy',$product->id)}}" title="Delete Product" style="display:inline-block;"  enctype="multipart/form-data">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                      </form>
                     </td>
                   </tr>
                   @endforeach
