@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ordersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SupplierController;
 /*
@@ -16,13 +16,5 @@ use App\Http\Controllers\SupplierController;
 */
 
 
-Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
-
-//Products Routes//
-Route::middleware('auth')->group(function(){
-   Route::resource('products',ProductsController::class);
-   Route::resource('category',CategoryController::class);
-   Route::resource('supplier',SupplierController::class);
-});
+ 

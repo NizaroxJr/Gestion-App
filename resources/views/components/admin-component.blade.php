@@ -181,7 +181,7 @@
           <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"></a>
         </div>
       </div>
 
@@ -218,7 +218,42 @@
               </li>
             </ul>
           </li>
-            
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-shopping-cart"></i>
+              <p>
+                Orders
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('order.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                    <p>Orders</p>
+                </a>
+               </li>
+              </li>
+            </ul>
+          </li>
+
+        <li class="nav-item menu-open">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-user-tie"></i>
+              <p>
+                Clients
+                <i class="nav-icon right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('supplier.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Clients</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!--Logout -->
           <li class="nav-item">
             
             <a class="nav-link" href="{{ route('logout') }}"

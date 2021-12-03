@@ -1,6 +1,6 @@
 <x-admin-component>
 @section('title')
-Add Product
+Edit product
 @stop
 
 @section('CustomStyles')
@@ -13,7 +13,7 @@ Add Product
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-         <h3><strong>Edit Product</strong></h3>
+         <h3><strong>Edit product</strong></h3>
       </div><!-- /.container-fluid -->
     </div>
 
@@ -30,15 +30,15 @@ Add Product
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form id="EditProduct" method="post" action="{{route('products.update',$product->id)}}" enctype="multipart/form-data">
+              <form id="Editproduct" method="post" action="{{route('products.update',$product->id)}}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="card-body">
                   <div class="form-row">
                      <!-- Row Start-->
                   <div class="form-group col-lg-6 col-md-12">
-                    <label for="ProductName">Product Name*</label>
-                    <input type="text" name="name" class="form-control" id="ProductName" value="{{$product->name}}"  required>
+                    <label for="productName">product Name*</label>
+                    <input type="text" name="name" class="form-control" id="productName" value="{{$product->name}}"  required>
                   </div>
                   <div class="form-group col-lg-6 col-md-12">
                     <label for="Quantity">Quantity</label>
@@ -100,14 +100,14 @@ Add Product
                 </div>
                  <!-- Row End--> 
                   <div class="form-group">
-                    <label for="Description">Product Description</label>
+                    <label for="Description">product Description</label>
                     <textarea name="description" class="form-control" id="Description"  rows="5">{{$product->description}}</textarea>
                   </div>
                 </div> 
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Edit Product</button>
+                  <button type="submit" class="btn btn-primary">Edit product</button>
                 </div>
               </form>
             </div>

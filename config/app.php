@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'orderion'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,8 +52,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
-
+    'url' => env('APP_URL', 'http://gestion.test'),
+    'url_base' => env('APP_URL_BASE', 'http://localhost'),
     'asset_url' => env('ASSET_URL', null),
 
     /*
@@ -161,6 +161,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        // Hyn multi tenancy.
+        Hyn\Tenancy\Providers\TenancyProvider::class,
+        // Hyn multi tenancy webserver integration.
+        Hyn\Tenancy\Providers\WebserverProvider::class,
 
         /*
          * Package Service Providers...

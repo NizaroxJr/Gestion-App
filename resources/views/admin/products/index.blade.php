@@ -1,6 +1,6 @@
 <x-admin-component>
 @section('title')
-Products
+products
 @stop
 
 
@@ -10,7 +10,7 @@ Products
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-         <h3><strong>Products</strong></h3>
+         <h3><strong>products</strong></h3>
       </div><!-- /.container-fluid -->
     </div>
 
@@ -22,11 +22,11 @@ Products
 
         <div class="card">
               <div class="card-header">
-                <a href="{{route('products.create')}}"><button class="btn btn-primary"><i class="fas fa-plus"></i>Add Product</button></a>
+                <a href="{{route('products.create')}}"><button class="btn btn-primary"><i class="fas fa-plus"></i>Add product</button></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bproducted table-striped">
                   <thead>
                   <tr>
                     <th>Image</th>
@@ -41,7 +41,7 @@ Products
                   <tbody>
                     @foreach($products as $product)
                   <tr>
-                    <td><img width="100" src="/images/{{$product->img}}" alt=""></td>
+                    <td><img width="100" src="{{$product->img}}" alt=""></td>
                     <td>{{$product->id}}</td>
                     <td>{{$product->name}}</td>
                     <td><span class="badge badge-primary">{{$product->quantity}}</span></td>
@@ -52,14 +52,14 @@ Products
                     <td><span class="badge badge-danger">{{$product->status}}</span></td>                    
                     @endif
                     <td>
-                      <a style="margin-right:20px" title="Product Details" href="{{route('products.show',$product->id)}}"><i class="far fa-eye"></i></a>
-                      <a style="margin-right:20px" title="Edit Product" href="{{route('products.edit',$product->id)}}"><i class="fas fa-edit"></i></a>
-                      <form  method="post" action="{{route('products.store')}}" title="Clone Product" style="display:inline-block;" enctype="multipart/form-data">
+                      <a style="margin-right:20px" title="product Details" href="{{route('products.show',$product->id)}}"><i class="far fa-eye"></i></a>
+                      <a style="margin-right:20px" title="Edit product" href="{{route('products.edit',$product->id)}}"><i class="fas fa-edit"></i></a>
+                      <form  method="post" action="{{route('products.store')}}" title="Clone product" style="display:inline-block;" enctype="multipart/form-data">
                         @csrf
                         <input  name="id" type="hidden" value="{{$product->id}}">
                         <button type="submit" class="btn btn-success"><i class="fa fa-copy"></i></button>
                       </form>
-                      <form method="post" action="{{route('products.destroy',$product->id)}}" title="Delete Product" style="display:inline-block;"  enctype="multipart/form-data">
+                      <form method="post" action="{{route('products.destroy',$product->id)}}" title="Delete product" style="display:inline-block;"  enctype="multipart/form-data">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -106,7 +106,7 @@ Products
       "paging": true,
       "lengthChange": false,
       "searching": false,
-      "ordering": true,
+      "producting": true,
       "info": true,
       "autoWidth": false,
       "responsive": true,

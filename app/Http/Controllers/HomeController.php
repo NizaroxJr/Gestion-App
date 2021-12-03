@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.admin');
+        $host = request()->getHttpHost();
+        return view('tenants.admin',['host'=>$host]);
     }
 }

@@ -1,6 +1,6 @@
 <x-admin-component>
 @section('title')
-{{$product->name}}:: Product Details
+{{$product->name}}:: product Details
 @stop
 
 
@@ -28,7 +28,7 @@
                  <div class="col-lg-8 col-md-12">
                    <div class="card-body">
                      <p class="card-text">
-                       <span><strong>Product ID:</strong></span>
+                       <span><strong>product ID:</strong></span>
                        <span>{{$product->id}}</span>
                     </p>
                     <p class="card-text">
@@ -45,11 +45,11 @@
                     </p>
                     <p class="card-text">
                        <span><strong>Supplier:</strong></span>
-                       <span>{{$supplier->name}}</span>
+                       <span>{{$supplier}}</span>
                     </p>
                     <p class="card-text">
                        <span><strong>Category:</strong></span>
-                       <span>{{$category->name}}</span>
+                       <span>{{$category}}</span>
                     </p>
                     <p class="card-text">
                        <span><strong>Status:</strong></span>

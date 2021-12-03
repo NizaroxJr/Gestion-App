@@ -8,7 +8,7 @@ Dashboard
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-         <h1>Dashboard</h1>
+         <h1></h1>
       </div><!-- /.container-fluid -->
     </div>
 

@@ -21,8 +21,8 @@ class Category extends Model
         return $this->belongsTo(\App\Models\Category::class,'parent_id');
     }
 
-    function products(){
-        return $this->hasMany(Product::class);;
+    function orders(){
+        return $this->hasMany(order::class);;
     }
     
 }

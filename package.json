@@ -6,8 +6,8 @@
         "watch": "mix watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
+        "prod": "npm run orderion",
+        "orderion": "mix --orderion"
     },
     "devDependencies": {
         "axios": "^0.21",
