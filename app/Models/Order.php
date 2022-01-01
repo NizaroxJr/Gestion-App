@@ -10,14 +10,29 @@ class Order extends Model
     use HasFactory;
     
     protected $guarded = [];
-
-    public function product()
+    
+    public function invoices()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function bills()
+    {
+        return $this->hasMany(Bill::class);
     }
 
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+    
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }

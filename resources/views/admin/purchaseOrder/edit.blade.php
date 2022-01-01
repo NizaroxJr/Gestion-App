@@ -30,20 +30,20 @@ Edit order
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-        <form id="Editorder" method="post" action="{{route('order.update',$order->id)}}" enctype="multipart/form-data"> 
+        <form id="Editorder" method="post" action="{{route('purchaseOrder.update',$order->id)}}" enctype="multipart/form-data"> 
                 @csrf
                 @method('PATCH')
                 <div class="card-body">
                   <div class="form-row">
                      <!-- Row Start-->
                   <div class="form-group col-lg-6 col-md-12">
-                  <label for="client">Client</label>
-                  <select  id="client" name="client" class="form-control js-example-basic-single " style="width: 100%;" required>
-                    @foreach($clients as $client)
-                      @if($client->id == $order->client->id)
-                    <option value="{{$client->id}}" selected>{{$client->Name}}</option>
+                  <label for="supplier">supplier</label>
+                  <select  id="supplier" name="supplier" class="form-control js-example-basic-single " style="width: 100%;" required>
+                    @foreach($suppliers as $supplier)
+                      @if($supplier->id == $order->supplier->id)
+                    <option value="{{$supplier->id}}" selected>{{$supplier->name}}</option>
                       @else
-                    <option value="{{$client->id}}" >{{$client->Name}}</option>
+                    <option value="{{$supplier->id}}" >{{$supplier->name}}</option>
                       @endif
                     @endforeach
                   </select>

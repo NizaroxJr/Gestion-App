@@ -12,6 +12,6 @@ class Supplier extends Model
     protected $guarded = [];
     
     function orders(){
-        return $this->hasMany(order::class);
+        return $this->hasMany(Order::class);
     }
 }

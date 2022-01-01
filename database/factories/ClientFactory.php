@@ -23,11 +23,11 @@ class ClientFactory extends Factory
     {
         return [
             'id'=>$this->faker->unique()->randomDigit,
-            'name'=>$this->faker->firstNameMale,
+            'Name'=>$this->faker->firstNameMale,
             'CompanyName'=>$this->faker->company,
+            'Adresse'=>$this->faker->address,
             'phone'=>$this->faker->phoneNumber,
-            'email'=>$this->faker->email,
-            'Adresse'=>$this->faker->address
+            'email'=>$this->faker->email
         ];
     }
 }

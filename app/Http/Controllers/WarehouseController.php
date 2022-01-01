@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Client;
 
-class ClientController extends Controller
+class WarehouseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients=Client::all();
-        return view('admin.client.index',['clients'=> $clients]);
+        //
     }
 
     /**
@@ -25,7 +23,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('admin.client.add');
+        //
     }
 
     /**
@@ -36,8 +34,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $client=client::create($request->all());
-        return redirect()->route('client.index');
+        //
     }
 
     /**
@@ -59,9 +56,8 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $client=Client::find($id);
-        return view('admin.client.edit',compact('client'));
-    }   
+        //
+    }
 
     /**
      * Update the specified resource in storage.
@@ -72,13 +68,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Client::where('id', $id)->update(['Name'=>$request->input('Name'),
-                                          'phone'=>$request->input('phone'),
-                                          'email'=>$request->input('email'),
-                                          'Adresse'=>$request->input('Adresse'),
-                                          'CompanyName'=>$request->input('CompanyName')
-                                          ]);
-        return redirect()->route('client.index');
+        //
     }
 
     /**
@@ -89,7 +79,6 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        Client::where('id', $id)->delete();
-        return redirect()->route('client.index');
+        //
     }
 }

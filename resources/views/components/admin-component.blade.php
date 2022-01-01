@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
   
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" >
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -211,9 +211,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('supplier.index')}}" class="nav-link">
+                <a href="{{route('warehouse.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Suppliers</p>
+                  <p>Warehouses</p>
                 </a>
               </li>
             </ul>
@@ -222,37 +222,63 @@
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-shopping-cart"></i>
               <p>
-                Orders
+                Sales
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{route('order.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                    <p>Orders</p>
+                    <p>Sales Orders</p>
                 </a>
                </li>
-              </li>
-            </ul>
-          </li>
-
-        <li class="nav-item menu-open">
-            <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-user-tie"></i>
-              <p>
-                Clients
-                <i class="nav-icon right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('supplier.index')}}" class="nav-link">
+               <li class="nav-item">
+                <a href="{{route('invoice.index')}}" class="nav-link">
+                  <i class="fas fa-file-invoice nav-icon"></i>
+                    <p>Invoices</p>
+                </a>
+               </li>
+               <li class="nav-item">
+                <a href="{{route('client.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Clients</p>
                 </a>
               </li>
+              
+              </li>
             </ul>
           </li>
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link ">
+              <i class="fas fa-shopping-bag nav-icon"></i>
+              <p>
+                Purchases
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+               <li class="nav-item">
+                <a href="{{route('purchaseOrder.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                    <p>Purchase Orders</p>
+                </a>
+               </li>
+               <li class="nav-item">
+                <a href="{{route('bill.index')}}" class="nav-link">
+                  <i class="fas fa-file-invoice-dollar nav-icon"></i>
+                    <p>Bills</p>
+                </a>
+               </li>
+               <li class="nav-item">
+                <a href="{{route('supplier.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Suppliers</p>
+                </a>
+              </li>
+              </li>
+            </ul>
+          </li>
+
+        
           <!--Logout -->
           <li class="nav-item">
             

@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class Warehouse extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
-    public function orders()
+    public function products()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Product::class);
     }
 }

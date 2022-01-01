@@ -1,6 +1,6 @@
 <x-admin-component>
 @section('title')
-Edit order
+Add purchaseOrder
 @stop
 
 @section('CustomStyles')
@@ -13,7 +13,7 @@ Edit order
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-         <h3><strong>Edit order</strong></h3>
+         <h3><strong>Add purchaseOrder</strong></h3>
       </div><!-- /.container-fluid -->
     </div>
 
@@ -26,55 +26,42 @@ Edit order
        <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Order::{{$order->id}}</h3>
+                <div>
+                  <h3 class="card-title">Add purchaseOrder</h3>
+                </div>
+                
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-        <form id="Editorder" method="post" action="{{route('order.update',$order->id)}}" enctype="multipart/form-data"> 
+              <form id="addpurchaseOrder" method="post" action="{{route('purchaseOrder.store')}}" enctype="multipart/form-data">
                 @csrf
-                @method('PATCH')
                 <div class="card-body">
                   <div class="form-row">
                      <!-- Row Start-->
-                  <div class="form-group col-lg-6 col-md-12">
-                  <label for="client">Client</label>
-                  <select  id="client" name="client" class="form-control js-example-basic-single " style="width: 100%;" required>
-                    @foreach($clients as $client)
-                      @if($client->id == $order->client->id)
-                    <option value="{{$client->id}}" selected>{{$client->Name}}</option>
-                      @else
-                    <option value="{{$client->id}}" >{{$client->Name}}</option>
-                      @endif
+                  <div id="purchaseOrderType" class="form-group col-lg-6 col-md-12">
+                  <label for="supplier">Supplier</label>
+                  <select  id="supplier" name="supplier" class="form-control js-example-basic-single" style="width: 100%;" required>
+                    @foreach($suppliers as $supplier)
+                    <option value="{{$supplier->id}}">{{$supplier->name}}</option>
                     @endforeach
                   </select>
                   </div>
 
                   <div class="form-group col-lg-6 col-md-12">
                     <label for="Status">Status</label>
-                    <select  id="status" name="status" class="form-control select2" style="width: 100%;" required>
-                    @if($order->Status == "Shipped")
-                    <option value="Shipped" selected>Shipped</option>
+                    <select  id="status" name="status" class="form-control" style="width: 100%;" required>
+                    <option value="Shipped" selected="selected">Shipped</option>
                     <option value="Not Shipped">Not Shipped</option>
-                    <option value="Cancelled">Cancelled</option>
-                     @elseif($order->Status == "Not Shipped")
-                    <option value="Shipped" >Shipped</option>
-                    <option value="Not Shipped" selected>Not Shipped</option>
-                    <option value="Cancelled">Cancelled</option>
-                    @else
-                    <option value="Shipped" >Shipped</option>
-                    <option value="Not Shipped">Not Shipped</option>
-                    <option value="Cancelled" selected>Cancelled</option>
-                    @endif  
+                    <option value="Canceled">Canceled</option>
                   </select>
                   </div>
-                  
-                 </div>
+                </div>
                    <!-- Row End-->
                   <div class="form-row">
                      <!-- Row Start-->
                   <div class="form-group col-lg-12">
-                    <label for="Description">Order Description</label>
-                    <textarea name="description" class="form-control" id="Description" rows="3" >{{$order->description}}</textarea>
+                    <label for="Description">purchaseOrder Description</label>
+                    <textarea name="description" class="form-control" id="Description" rows="3"></textarea>
                   </div>
                   
                  <!-- Row End-->
@@ -82,7 +69,7 @@ Edit order
                 <div class="form-row">
                      <!-- Row Start-->
                   <div class="form-group col-lg-12">
-                    <label for="Status">Order Products</label>
+                    <label for="Status">purchaseOrder Products</label>
                     <table class="table table-hover text-nowrap" id="invoice_table">
                         <thead>
                           <tr>
@@ -95,50 +82,37 @@ Edit order
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach($items as $item)
                           <tr>
                             <td >
-                              <select  name="product[]" class="form-control js-example-basic-single " style="width: 100%;" required>
+                              <select  id="0" name="product[]" class="form-control js-example-basic-single " style="width: 100%;" required>
                                  @foreach($products as $product)
-                                   @if($product->id == $item->product->id)
-                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
-                                   @else
-                                 <option value="{{$product->id}}" >{{$product->name}}</option>
-                                   @endif
+                                 <option value="{{$product->id}}">{{$product->name}}</option>
                                  @endforeach
                               </select>
                             </td>
                             <td>
-                              <input type="number" name="quantity[]"  class="form-control" id="Quantity" min="0" onchange="totalCalcul()" value="{{$item->quantity}}" required>
+                              <input type="number" name="quantity[]"  class="form-control" id="Quantity" min="0" onchange="totalCalcul()" required>
                             </td>
                             <td>
-                              <input type="number" name="price[]"  class="form-control" id="price" min="0" onchange="totalCalcul()" value="{{$item->price}}" required>
+                              <input type="number" name="price[]"  class="form-control" id="price" min="0" onchange="totalCalcul()" required>
                             </td>
                             <td>
-                              <input type="number" name="discount[]"  class="form-control" id="discount" min="0" max="100" onchange="totalCalcul()"  value="{{$item->discount}}" required>
+                              <input type="number" name="discount[]"  class="form-control" id="discount" min="0" max="100" onchange="totalCalcul()"  required>
                             </td>
                             <td>
-                              <input type="number" name="subtotal[]"  class="form-control" id="subtotal" min="0" value="{{$item->subtotal}}" readonly >
+                              <input type="number" name="subtotal[]"  class="form-control"  min="0" max="100" readonly required>
                             </td>
                             <td>
-                              <button type="button" class="btn btn-danger" onclick="destroyItem(this)"><i class="fas fa-minus-circle"></i></button>
+                              <button class="btn btn-secondary">
+                                <i class="fas fa-minus-circle"></i>
+                              </button>
                             </td>
-                            <td><input type="number" name="id[]" value="{{$item->id}}" hidden></td>
                           </tr>
-                          <tr style="display:none;">
-                              <td><input type="number"  value="0"></td>
-                              <td><input type="number" value="0"></td>
-                              <td><input type="number" value="0"></td>
-                              <td><input type="number" value="0"></td>
-                              <td><input type="number" value="0"></td>
-                              <td><input id="destroy" type="number" name="destroy[]"></td>
-                          </tr>
-                          
-                          @endforeach
                         </tbody>
                 </table>
-           </div>
-          </div>
+              </div>
+            </div>
+
                 <div class="form-row">
                   <div class="form-group col-lg-8">
                         <button class="btn btn-primary" onclick="addRow()"><i class="fas fa-plus"></i></button>
@@ -148,22 +122,20 @@ Edit order
                       <table class="table">
                            <tr>
                              <th style="width:50%"><strong>Subtotal:</strong></th>
-                             <td><input id="finalSubtotal" name="finalSubtotal" type="number" class="form-control" value="{{$order->subtotal}}" readonly></td>
+                             <td><input id="finalSubtotal" name="finalSubtotal" type="number" class="form-control" readonly></td>
                            </tr>
                            <tr>
                              <th><strong>Shipping:</strong></th>
-                             <td><input id="shipping" name="shipping" type="number" class="form-control" onchange="ship()" value="{{$order->shipping}}"></td>
+                             <td><input id="shipping" name="shipping" type="number" class="form-control" onchange="ship()"></td>
                            </tr>
                            <tr>
                              <th><strong>Total:</strong></th>
-                             <td><input id="total" name="total" type="number" class="form-control" readonly value="{{$order->total}}"></td>
+                             <td><input id="total" name="total" type="number" class="form-control" readonly></td>
                            </tr>
                     </table>
                   </div>
                 </div>
-
-                  </div>
-                </div>
+              </div>
                  <!-- Row End-->  
                  
                  <!-- Row End--> 
@@ -172,9 +144,9 @@ Edit order
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary" >Edit order</button>
+                  <button type="submit" class="btn btn-primary">Add purchaseOrder</button>
                 </div>
-             </form> 
+              </form>
             </div>
             <!-- /.card -->
       <!-- /.container-fluid -->
@@ -203,7 +175,7 @@ function addRow() {
         var rowCnt = empTab.rows.length;    // get the number of rows.
         var tr = empTab.insertRow(rowCnt); // table row.
         
-        for (var c = 0; c < 7; c++) {
+        for (var c = 0; c < 6; c++) {
 
         var td = document.createElement('td');          // TABLE DEFINITION.
         td = tr.insertCell(c);
@@ -252,10 +224,10 @@ function addRow() {
                 ele.setAttribute('name', 'subtotal[]');
                 ele.setAttribute('type', 'number  ');
                 ele.setAttribute('class', 'form-control');
-                ele.setAttribute('readonly', '');
+                ele.setAttribute('readonly','');
                 td.appendChild(ele);
               }
-              else if(c==5){
+              else{
                 var button = document.createElement('button');
 
                 // set the attributes.
@@ -263,19 +235,10 @@ function addRow() {
                 button.setAttribute('value', 'Remove');
                 button.setAttribute('class','btn btn-secondary');
 
-                // Edit button's "onclick" event.
+                // add button's "onclick" event.
                 button.setAttribute('onclick', 'removeRow(this)');
 
                 td.appendChild(button);
-              }
-              else{
-                var ele = document.createElement('input');
-                ele.setAttribute('name', 'id[]');
-                ele.setAttribute('type', 'number  ');
-                ele.setAttribute('class', 'form-control');
-                ele.setAttribute('hidden', '');
-                td.appendChild(ele);
-
               }
         }
         
@@ -289,7 +252,7 @@ function addRow() {
         empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // buttton -> td -> tr
     }
   
-    var total = 0;
+  var total = 0;
   
     function ship(){
       var shipping=document.getElementById('shipping').value;
@@ -322,18 +285,6 @@ function addRow() {
         totalElement.setAttribute('value',finalSubtotal);
         
         ship();
-  }
-
-    function destroyItem(item){
-    var rowindex=item.parentNode.parentNode.rowIndex;
-    var tbody=item.parentNode.parentNode.parentNode;
-    var destroyInput=item.parentNode.parentNode.children[6].children[0].value;
-    var destroy=tbody.children[rowindex].children[5].children[0];
-    destroy.setAttribute('value',destroyInput);
-    
-    var empTab = document.getElementById('invoice_table');
-    empTab.deleteRow(item.parentNode.parentNode.rowIndex);
-    totalCalcul();
   }
   
 

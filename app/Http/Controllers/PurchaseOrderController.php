@@ -10,8 +10,7 @@ use App\Models\Supplier;
 use App\Models\OrderItem;
 use PDF;
 
-
-class OrderController extends Controller
+class PurchaseOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +19,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders=Order::whereNull('supplier_id')->get();
-        
-        return view('admin.order.index',['orders'=> $orders]);
+        $orders=Order::whereNull('client_id')->get();
+        return view('admin.purchaseOrder.index',['orders'=> $orders]);
     }
 
     /**
@@ -33,9 +31,8 @@ class OrderController extends Controller
     public function create()
     {   
         $products=Product::all();
-        $clients=Client::all();
         $suppliers=Supplier::all();
-        return view('admin.order.add',compact('clients','products','suppliers'));
+        return view('admin.purchaseOrder.add',compact('products','suppliers'));
     }
 
     /**
@@ -81,14 +78,13 @@ class OrderController extends Controller
         //Create Product
         else{
            $employeeId = auth()->user()->id;
-
            $order=Order::create([
                'total'=>$request->input('total'),
                'subtotal'=>$request->input('finalSubtotal'),
                'shipping'=>$request->input('shipping'),
                'description'=>$request->input('description'),
                'Status'=>$request->input('status'),
-               'client_id'=>$request->input('client'),
+               'supplier_id'=>$request->input('supplier'),
                'employee_id' =>  $employeeId,
                'PaymentStatus' =>   'Paid',
 
@@ -109,7 +105,7 @@ class OrderController extends Controller
         }
         
         
-        return redirect()->route('purchaseOrder.index');
+        return redirect()->route('order.index');
     }
 
     /**
@@ -121,7 +117,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order=Order::find($id);
-       return view('admin.order.show',
+       return view('admin.purchaseOrder.show',
                    ['order'=>$order,
                    'items'=>$order->orderItems
                     ]);
@@ -137,12 +133,12 @@ class OrderController extends Controller
     {
         $order=Order::find($id);
         $products=Product::all();
-        $clients=Client::all();
+        $suppliers=Supplier::all();
 
        return view('admin.purchaseOrder.edit',
                    ['order'=>$order,
                    'products'=>$products,
-                    'clients'=>$clients,
+                    'suppliers'=>$suppliers,
                    'items'=>$order->orderItems
                     ]);
     }
@@ -163,7 +159,7 @@ class OrderController extends Controller
             }
          }
 
-       Order::where('id', $id)->update(['client_id'=>$request->input('client'),
+       Order::where('id', $id)->update(['supplier_id'=>$request->input('supplier'),
                                          'total'=>$request->input('total'),
                                          'subtotal'=>$request->input('finalSubtotal'),
                                          'shipping'=>$request->input('shipping'),
@@ -187,7 +183,7 @@ class OrderController extends Controller
             }
         }
 
-         return redirect()->route('order.index');
+         return redirect()->route('purchaseOrder.index');
     }
 
     /**
@@ -206,20 +202,20 @@ class OrderController extends Controller
             OrderItem::where('id', $item->id)->delete();
          }
     
-        return redirect()->route('purchaseOrder.index');
+        return redirect()->route('order.index');
     }
 
      // this function opens the PDF in browser. If we want, we can downlod
     public function openPDF($id)
     {
         $order = Order::find($id);
-        $client=$order->client;
+        $supplier=$order->supplier;
         $user=auth()->user();
         $items=$order->orderItems;
         // usersPdf is the view that includes the downloading content
-        $view = \View::make('admin.order.print', ['order'=>$order,
+        $view = \View::make('admin.purchaseOrder.print', ['order'=>$order,
                                                   'user'=>$user,
-                                                  'client'=>$client,
+                                                  'supplier'=>$supplier,
                                                   'items'=>$items
                                                 ]);
         $html_content = $view->render();
@@ -235,13 +231,13 @@ class OrderController extends Controller
     public function savePDF($id)
     {
         $order = Order::find($id);
-        $client=$order->client;
+        $supplier=$order->supplier;
         $user=auth()->user();
         $items=$order->orderItems;
         // usersPdf is the view that includes the downloading content
-        $view = \View::make('admin.order.print', ['order'=>$order,
+        $view = \View::make('admin.purchaseOrder.print', ['order'=>$order,
                                                   'user'=>$user,
-                                                  'client'=>$client,
+                                                  'supplier'=>$supplier,
                                                   'items'=>$items
                                                 ]);
         $html_content = $view->render();

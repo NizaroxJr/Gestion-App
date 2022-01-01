@@ -1,16 +1,14 @@
 <x-admin-component>
 @section('title')
-Orders
+bills
 @stop
-
-
 
 @section('content')
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-         <h3><strong>Sales Orders</strong></h3>
+         <h3><strong>Bills</strong></h3>
       </div><!-- /.container-fluid -->
     </div>
 
@@ -18,18 +16,17 @@ Orders
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-
         <div class="card">
               <div class="card-header">
-                <a href="{{route('order.create')}}"><button class="btn btn-primary"><i class="fas fa-plus"></i>Add Order</button></a>
+                <a href="{{route('bill.create')}}"><button class="btn btn-primary"><i class="fas fa-plus"></i>Add bill</button></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bbilled table-striped">
                   <thead>
                   <tr>
-                    <th>Order ID</th>
-                    <th>Customer Name</th>
+                    <th>ID</th>
+                    <th>Supplier Name</th>
                     <th>Total Price</th>
                     <th>Status</th>
                     <th>Payment Status</th>
@@ -37,30 +34,30 @@ Orders
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach($orders as $order)
+                    @foreach($bills as $bill)
                   <tr>
-                    <td>{{$order->id}}</td>
-                    <td>{{$order->client->Name}}</td>
-                    <td>{{$order->total}}</td>
-                    @if($order->Status == "Shipped")
-                    <td><span class="badge badge-success">{{$order->Status}}</span></td>
+                    <td>{{$bill->id}}</td>
+                    <td>{{$bill->order->supplier->name}}</td>
+                    <td>{{$bill->order->total}}$</td>
+                    @if($bill->Status == "Accepted")
+                    <td><span class="badge badge-success">{{$bill->Status}}</span></td>
                     @else
-                    <td><span class="badge badge-danger">{{$order->Status}}</span></td>                    
+                    <td><span class="badge badge-danger">{{$bill->Status}}</span></td>                    
                     @endif
-                    @if($order->PaymentStatus == "Paid")
-                    <td><span class="badge badge-success">{{$order->PaymentStatus}}</span></td>                    
+                    @if($bill->PaymentStatus == "Paid")
+                   <td><span class="badge badge-success">{{$bill->PaymentStatus}}</span></td>                    
                     @else
-                    <td><span class="badge badge-danger">{{$order->PaymentStatus}}</span></td>                   
+                    <td><span class="badge badge-danger">{{$bill->PaymentStatus}}</span></td> 
                     @endif
                     <td>
-                      <a style="margin-right:20px" title="Order Details" href="{{route('order.show',$order->id)}}"><i class="far fa-eye"></i></a>
-                      <a style="margin-right:20px" title="Edit Order" href="{{route('order.edit',$order->id)}}"><i class="fas fa-edit"></i></a>
-                      <form  method="post" action="{{route('order.store')}}" title="Clone Order" style="display:inline-block;" enctype="multipart/form-data">
+                      <a style="margin-right:20px" title="bill Details" href="{{route('bill.show',$bill->id)}}"><i class="far fa-eye"></i></a>
+                      <a style="margin-right:20px" title="Edit bill" href="{{route('bill.edit',$bill->id)}}"><i class="fas fa-edit"></i></a>
+                      <form  method="post" action="{{route('bill.store')}}" title="Clone bill" style="display:inline-block;" enctype="multipart/form-data">
                         @csrf
-                        <input  name="id" type="hidden" value="{{$order->id}}">
+                        <input  name="id" type="hidden" value="{{$bill->id}}">
                         <button type="submit" class="btn btn-success"><i class="fa fa-copy"></i></button>
                       </form>
-                      <form method="post" action="{{route('order.destroy',$order->id)}}" title="Delete Order" style="display:inline-block;"  enctype="multipart/form-data">
+                      <form method="post" action="{{route('bill.destroy',$bill->id)}}" title="Delete bill" style="display:inline-block;"  enctype="multipart/form-data">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -107,7 +104,7 @@ Orders
       "paging": true,
       "lengthChange": false,
       "searching": false,
-      "ordering": true,
+      "billing": true,
       "info": true,
       "autoWidth": false,
       "responsive": true,

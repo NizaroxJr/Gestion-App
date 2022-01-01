@@ -1,6 +1,6 @@
 <x-admin-component>
 @section('title')
-Show order
+Add invoice
 @stop
 
 @section('CustomStyles')
@@ -9,11 +9,11 @@ Show order
 @stop
 
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper"  >
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-         <h3><strong>Show order</strong></h3>
+         <h3><strong>Add invoice</strong></h3>
       </div><!-- /.container-fluid -->
     </div>
 
@@ -26,36 +26,54 @@ Show order
        <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Order::{{$order->id}}</h3>
+                <h3 class="card-title">Show invoice</h3>
               </div>
               <!-- /.card-header -->
+              <!-- form start -->
                 <div class="card-body">
                   <div class="form-row">
                      <!-- Row Start-->
-                      <div class="form-group col-lg-6 col-md-12">
-                      <label for="client">Client</label>
-                      <input type="text" class="form-control" value="{{$order->client->Name}}" readonly>
-                      </div>
-    
-                      <div class="form-group col-lg-6 col-md-12">
-                        <label for="Status">Status</label> 
-                        <input type="text" class="form-control" value="{{$order->Status}}" readonly>
-                      </div>
+                  <div class="form-group col-lg-6 col-md-12">
+                    <label for="order">Order:</label>
+                    <span>{{$invoice->order->id}}</span>
+                  </div>
+
+                  <div class="form-group col-lg-6 col-md-12">
+                    <label for="Status">Status:</label>
+                    <span>{{$invoice->Status}}</span>
+                  </div>
+                  
                  </div>
                    <!-- Row End-->
                   <div class="form-row">
                      <!-- Row Start-->
-                     <div class="form-group col-lg-12">
-                       <label for="Description">Order Description</label>
-                       <textarea name="description" class="form-control" id="Description" rows="3" placeholder="{{$order->description}}" readonly></textarea>
-                     </div> 
+                  <div class="form-group col-lg-12">
+                    <label for="Description">Invoice Description</label>
+                    <textarea name="description" class="form-control" id="Description" rows="3" readonly>{{$invoice->description}}</textarea>
+                  </div>
+                  
                  <!-- Row End-->
                 </div> 
+
                 <div class="form-row">
-                     <!-- Row Start-->-
-                  <div class="form-group col-lg-12">
-                    <label for="Status">Order Products</label>
-                    <table class="table table-hover text-nowrap" id="invoice_table">
+                     <!-- Row Start-->
+                  <div class="form-group col-lg-6 col-md-12">
+                    <label for="invoiceDate">Invoice Date</label>
+                    <input type="date" name="date" id="invoiceDate" required value="{{$invoice->Date}}" readonly>
+                  </div>
+                  <div class="form-group col-lg-6 col-md-12">
+                    <label for="dueDate">Due Date</label>
+                    <input type="date" name="dueDate" id="dueDate" required value="{{$invoice->dueDate}}" readonly>
+                  </div>
+                  
+                 <!-- Row End-->
+                </div> 
+
+                <div class="form-row">
+                     <!-- Row Start-->
+                  <div class="form-group col-lg-12" >
+                    <label for="Status">Invoice Products</label>
+                    <table class="table table-hover text-nowrap" >
                         <thead>
                           <tr>
                             <th width="50%">Product</th>
@@ -66,8 +84,8 @@ Show order
                             <th></th>
                           </tr>
                         </thead>
-                        <tbody>
-                          @foreach($items as $item)
+                        <tbody id="orderItem">
+                          @foreach($invoice->order->orderItems as $item)
                           <tr>
                             <td >
                               {{$item->product->name}}
@@ -87,11 +105,10 @@ Show order
                           </tr>
                           @endforeach
                         </tbody>
-                  </table>
-                </div>
+                    </table>  
               </div>
-
-                  <div class="form-row">
+            </div>
+                              <div class="form-row">
                         <!-- Row Start-->
                       <div class="form-group col-lg-8">
                         
@@ -100,26 +117,32 @@ Show order
                          <table class="table">
                            <tr>
                              <th style="width:50%"><strong>Subtotal:</strong></th>
-                             <td><input id="finalSubtotal" name="finalSubtotal" type="number" class="form-control" value="{{$order->subtotal}}" readonly></td>
+                             <td>${{$invoice->order->subtotal}}</td>
                            </tr>
                            <tr>
                              <th><strong>Shipping:</strong></th>
-                             <td><input id="shipping" name="shipping" type="number" class="form-control" value="{{$order->shipping}}" onchange="ship()" readonly></td>
+                             <td>${{$invoice->order->shipping}}</td>
                            </tr>
                            <tr>
                              <th><strong>Total:</strong></th>
-                             <td><input id="total" name="total" type="number" class="form-control" value="{{$order->total}}" readonly></td>
+                             <td>${{$invoice->order->total}}</td>
                            </tr>
                     </table>
                       </div>
                  </div>  
                  <div class="row">
                    <div class="form-group col-lg-8">
-                        <a href="{{ url('order/download' , $order->id) }}"><button type="button" class="btn btn-primary"><i class="fas fa-download"></i> Download PDF</button></a>
-                        <a href="{{ url('order/viewpdf' , $order->id) }}"><button type="button" class="btn btn-secondary"><i class="fas fa-eye"></i>View PDF</button></a>
+                        <a href="{{ url('invoice/download' , $invoice->id) }}"><button type="button" class="btn btn-primary"><i class="fas fa-download"></i> Download PDF</button></a>
+                        <a href="{{ url('invoice/viewpdf' , $invoice->id) }}"><button type="button" class="btn btn-secondary"><i class="fas fa-eye"></i>View PDF</button></a>
                       </div>
                  </div>
-              </div> 
+            </div>
+         </div>
+                 <!-- Row End-->  
+                 
+                 <!-- Row End--> 
+                  
+                </div> 
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -142,6 +165,12 @@ Show order
 
 <script src="{{asset('plugins/tags/tagsinput.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
 
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+
+</script>
 @stop
 </x-admin-component>

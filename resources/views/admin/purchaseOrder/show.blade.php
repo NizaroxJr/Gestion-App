@@ -33,8 +33,8 @@ Show order
                   <div class="form-row">
                      <!-- Row Start-->
                       <div class="form-group col-lg-6 col-md-12">
-                      <label for="client">Client</label>
-                      <input type="text" class="form-control" value="{{$order->client->Name}}" readonly>
+                      <label for="supplier">supplier</label>
+                      <input type="text" class="form-control" value="{{$order->supplier->name}}" readonly>
                       </div>
     
                       <div class="form-group col-lg-6 col-md-12">
@@ -115,8 +115,8 @@ Show order
                  </div>  
                  <div class="row">
                    <div class="form-group col-lg-8">
-                        <a href="{{ url('order/download' , $order->id) }}"><button type="button" class="btn btn-primary"><i class="fas fa-download"></i> Download PDF</button></a>
-                        <a href="{{ url('order/viewpdf' , $order->id) }}"><button type="button" class="btn btn-secondary"><i class="fas fa-eye"></i>View PDF</button></a>
+                        <a href="{{ url('purchaseOrder/download' , $order->id) }}"><button type="button" class="btn btn-primary"><i class="fas fa-download"></i> Download PDF</button></a>
+                        <a href="{{ url('purchaseOrder/viewpdf' , $order->id) }}"><button type="button" class="btn btn-secondary"><i class="fas fa-eye"></i>View PDF</button></a>
                       </div>
                  </div>
               </div> 

@@ -1,6 +1,6 @@
 <x-admin-component>
 @section('title')
-Orders
+invoices
 @stop
 
 
@@ -10,7 +10,7 @@ Orders
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-         <h3><strong>Sales Orders</strong></h3>
+         <h3><strong>Invoices</strong></h3>
       </div><!-- /.container-fluid -->
     </div>
 
@@ -21,14 +21,14 @@ Orders
 
         <div class="card">
               <div class="card-header">
-                <a href="{{route('order.create')}}"><button class="btn btn-primary"><i class="fas fa-plus"></i>Add Order</button></a>
+                <a href="{{route('invoice.create')}}"><button class="btn btn-primary"><i class="fas fa-plus"></i>Add invoice</button></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-binvoiceed table-striped">
                   <thead>
                   <tr>
-                    <th>Order ID</th>
+                    <th>ID</th>
                     <th>Customer Name</th>
                     <th>Total Price</th>
                     <th>Status</th>
@@ -37,30 +37,30 @@ Orders
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach($orders as $order)
+                    @foreach($invoices as $invoice)
                   <tr>
-                    <td>{{$order->id}}</td>
-                    <td>{{$order->client->Name}}</td>
-                    <td>{{$order->total}}</td>
-                    @if($order->Status == "Shipped")
-                    <td><span class="badge badge-success">{{$order->Status}}</span></td>
+                    <td>{{$invoice->id}}</td>
+                    <td>{{$invoice->order->client->Name}}</td>
+                    <td>{{$invoice->order->total}}$</td>
+                    @if($invoice->Status == "Accepted")
+                    <td><span class="badge badge-success">{{$invoice->Status}}</span></td>
                     @else
-                    <td><span class="badge badge-danger">{{$order->Status}}</span></td>                    
+                    <td><span class="badge badge-danger">{{$invoice->Status}}</span></td>                    
                     @endif
-                    @if($order->PaymentStatus == "Paid")
-                    <td><span class="badge badge-success">{{$order->PaymentStatus}}</span></td>                    
+                    @if($invoice->PaymentStatus == "Paid")
+                   <td><span class="badge badge-success">{{$invoice->PaymentStatus}}</span></td>                    
                     @else
-                    <td><span class="badge badge-danger">{{$order->PaymentStatus}}</span></td>                   
+                    <td><span class="badge badge-danger">{{$invoice->PaymentStatus}}</span></td> 
                     @endif
                     <td>
-                      <a style="margin-right:20px" title="Order Details" href="{{route('order.show',$order->id)}}"><i class="far fa-eye"></i></a>
-                      <a style="margin-right:20px" title="Edit Order" href="{{route('order.edit',$order->id)}}"><i class="fas fa-edit"></i></a>
-                      <form  method="post" action="{{route('order.store')}}" title="Clone Order" style="display:inline-block;" enctype="multipart/form-data">
+                      <a style="margin-right:20px" title="invoice Details" href="{{route('invoice.show',$invoice->id)}}"><i class="far fa-eye"></i></a>
+                      <a style="margin-right:20px" title="Edit invoice" href="{{route('invoice.edit',$invoice->id)}}"><i class="fas fa-edit"></i></a>
+                      <form  method="post" action="{{route('invoice.store')}}" title="Clone invoice" style="display:inline-block;" enctype="multipart/form-data">
                         @csrf
-                        <input  name="id" type="hidden" value="{{$order->id}}">
+                        <input  name="id" type="hidden" value="{{$invoice->id}}">
                         <button type="submit" class="btn btn-success"><i class="fa fa-copy"></i></button>
                       </form>
-                      <form method="post" action="{{route('order.destroy',$order->id)}}" title="Delete Order" style="display:inline-block;"  enctype="multipart/form-data">
+                      <form method="post" action="{{route('invoice.destroy',$invoice->id)}}" title="Delete invoice" style="display:inline-block;"  enctype="multipart/form-data">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
@@ -107,7 +107,7 @@ Orders
       "paging": true,
       "lengthChange": false,
       "searching": false,
-      "ordering": true,
+      "invoiceing": true,
       "info": true,
       "autoWidth": false,
       "responsive": true,

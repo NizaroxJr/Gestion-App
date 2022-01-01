@@ -10,7 +10,7 @@ Orders
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-         <h3><strong>Sales Orders</strong></h3>
+         <h3><strong>Purchase Orders</strong></h3>
       </div><!-- /.container-fluid -->
     </div>
 
@@ -21,7 +21,7 @@ Orders
 
         <div class="card">
               <div class="card-header">
-                <a href="{{route('order.create')}}"><button class="btn btn-primary"><i class="fas fa-plus"></i>Add Order</button></a>
+                <a href="{{route('purchaseOrder.create')}}"><button class="btn btn-primary"><i class="fas fa-plus"></i>Add Order</button></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -29,7 +29,7 @@ Orders
                   <thead>
                   <tr>
                     <th>Order ID</th>
-                    <th>Customer Name</th>
+                    <th>Supplier Name</th>
                     <th>Total Price</th>
                     <th>Status</th>
                     <th>Payment Status</th>
@@ -40,7 +40,7 @@ Orders
                     @foreach($orders as $order)
                   <tr>
                     <td>{{$order->id}}</td>
-                    <td>{{$order->client->Name}}</td>
+                    <td>{{$order->supplier->name}}</td>
                     <td>{{$order->total}}</td>
                     @if($order->Status == "Shipped")
                     <td><span class="badge badge-success">{{$order->Status}}</span></td>
@@ -53,14 +53,14 @@ Orders
                     <td><span class="badge badge-danger">{{$order->PaymentStatus}}</span></td>                   
                     @endif
                     <td>
-                      <a style="margin-right:20px" title="Order Details" href="{{route('order.show',$order->id)}}"><i class="far fa-eye"></i></a>
-                      <a style="margin-right:20px" title="Edit Order" href="{{route('order.edit',$order->id)}}"><i class="fas fa-edit"></i></a>
-                      <form  method="post" action="{{route('order.store')}}" title="Clone Order" style="display:inline-block;" enctype="multipart/form-data">
+                      <a style="margin-right:20px" title="Order Details" href="{{route('purchaseOrder.show',$order->id)}}"><i class="far fa-eye"></i></a>
+                      <a style="margin-right:20px" title="Edit Order" href="{{route('purchaseOrder.edit',$order->id)}}"><i class="fas fa-edit"></i></a>
+                      <form  method="post" action="{{route('purchaseOrder.store')}}" title="Clone Order" style="display:inline-block;" enctype="multipart/form-data">
                         @csrf
                         <input  name="id" type="hidden" value="{{$order->id}}">
                         <button type="submit" class="btn btn-success"><i class="fa fa-copy"></i></button>
                       </form>
-                      <form method="post" action="{{route('order.destroy',$order->id)}}" title="Delete Order" style="display:inline-block;"  enctype="multipart/form-data">
+                      <form method="post" action="{{route('purchaseOrder.destroy',$order->id)}}" title="Delete Order" style="display:inline-block;"  enctype="multipart/form-data">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
