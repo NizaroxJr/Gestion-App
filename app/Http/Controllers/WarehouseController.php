@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Warehouse;
 
 class WarehouseController extends Controller
 {
@@ -13,7 +14,8 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        //
+        $warehouses=Warehouse::all();
+        return view('admin.warehouse.index',['warehouses'=> $warehouses]);
     }
 
     /**
@@ -23,7 +25,7 @@ class WarehouseController extends Controller
      */
     public function create()
     {
-        //
+         return view('admin.warehouse.add');
     }
 
     /**
@@ -34,7 +36,8 @@ class WarehouseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $warehouse=Warehouse::create($request->all());
+        return redirect()->route('warehouse.index');
     }
 
     /**
@@ -56,7 +59,8 @@ class WarehouseController extends Controller
      */
     public function edit($id)
     {
-        //
+        $warehouse=Warehouse::find($id); 
+        return view('admin.warehouse.edit',compact('warehouse'));
     }
 
     /**
@@ -68,7 +72,17 @@ class WarehouseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Warehouse::where('id', $id)->update(['name'=>$request->input('name'),
+                                             'street1'=>$request->input('street1'),
+                                             'street2'=>$request->input('street2'),
+                                             'city'=>$request->input('city'),
+                                             'country'=>$request->input('country'),
+                                             'state'=>$request->input('state'),
+                                             'phone'=>$request->input('phone'),
+                                             'email'=>$request->input('email'),
+                                             'zip'=>$request->input('zip')
+                                          ]);
+        return redirect()->route('warehouse.index');
     }
 
     /**
@@ -79,6 +93,7 @@ class WarehouseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Warehouse::where('id', $id)->delete();
+        return redirect()->route('warehouse.index');
     }
 }

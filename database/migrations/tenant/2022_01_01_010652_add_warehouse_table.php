@@ -13,7 +13,19 @@ class AddWarehouseTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('warehouses', function (Blueprint $table) {    
+            $table->id();
+            $table->string('name');
+            $table->text('street1');
+            $table->text('street2');
+            $table->string('city');
+            $table->string('country');
+            $table->string('state');
+            $table->integer('zip');
+            $table->string('phone');
+            $table->string('email');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +35,6 @@ class AddWarehouseTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('warehouses');
     }
 }
