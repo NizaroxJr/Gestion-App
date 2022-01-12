@@ -9,6 +9,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\RoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,9 +57,6 @@ Route::group(['middleware' => ['web','auth', 'tenancy.enforce']], function() {
    Route::get('/bill/viewpdf/{id}', [BillController::class, 'openPDF']);
    Route::get('/bill/get/{id1}', [BillController::class, 'ajaxAdd']);
    Route::get('/bill/{id1}/get/{id2}', [BillController::class, 'ajaxEdit']);
-   
-   
-   
-   
-    
+  //Roles Routes
+   Route::resource('roles',RoleController::class);   
 });

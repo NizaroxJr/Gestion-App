@@ -8,12 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Hyn\Tenancy\Traits\UsesTenantConnection;
-use Spatie\Permission\Traits\HasRoles;
 
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,UsesTenantConnection,HasRoles ;
+    use HasApiTokens, HasFactory, Notifiable,UsesTenantConnection;
     
 
     /**

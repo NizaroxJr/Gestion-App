@@ -277,8 +277,15 @@
               </li>
             </ul>
           </li>
-
-        
+          
+           <li class="nav-item menu-open">
+            <a href="{{route('roles.index')}}" class="nav-link ">
+              <i class="fas fa-user-tag nav-icon"></i>
+              <p>
+                Roles
+              </p>
+            </a>
+          </li> 
           <!--Logout -->
           <li class="nav-item">
             
