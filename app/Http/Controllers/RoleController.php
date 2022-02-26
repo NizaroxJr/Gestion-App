@@ -16,8 +16,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $this->authorize('canRole');
         $roles = Role::orderBy('id', 'desc')->get();
-
         return view('admin.roles.index', ['roles' => $roles]);
     }
 
@@ -28,6 +28,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('canRole');
         return view('admin.roles.create');
     }
 
@@ -39,6 +40,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('canRole');
         //validate the role fields
         $request->validate([
             'role_name' => 'required|max:255',
@@ -72,6 +74,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('canRole');
         $role=role::find($id);
         return view('admin.roles.show', ['role' => $role]);
     }
@@ -84,6 +87,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('canRole');
         $role=role::find($id);
         $permissions=$role->permissions;
         return view('admin.roles.edit', ['role' => $role,'permissions'=> $permissions]);
@@ -98,6 +102,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('canRole');
         //validate the role fields
         $request->validate([
             'role_name' => 'required|max:255',
@@ -134,6 +139,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('canRole');
         $role=Role::find($id);  
         $role->permissions()->delete();
         $role->delete();

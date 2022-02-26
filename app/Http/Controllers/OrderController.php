@@ -20,6 +20,7 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $this->authorize('canSales');
         $orders=Order::whereNull('supplier_id')->get();
         
         return view('admin.order.index',['orders'=> $orders]);
@@ -32,10 +33,11 @@ class OrderController extends Controller
      */
     public function create()
     {   
-        $products=Product::all();
+        $this->authorize('canSales');
+        $Saless=Sales::all();
         $clients=Client::all();
         $suppliers=Supplier::all();
-        return view('admin.order.add',compact('clients','products','suppliers'));
+        return view('admin.order.add',compact('clients','Saless','suppliers'));
     }
 
     /**
@@ -46,7 +48,8 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //Clone Product
+        $this->authorize('canSales');
+        //Clone Sales
         if($request->input('id')){
             $cloneOrder=Order::find($request->input('id'));
 
@@ -66,7 +69,7 @@ class OrderController extends Controller
                 OrderItem::Create(
                     [
                         'order_id' =>   $order->id,
-                        'product_id' =>  $item->product_id,
+                        'Sales_id' =>  $item->Sales_id,
                         'quantity' =>  $item->quantity,
                         'price' =>  $item->price,
                         'discount' => $item->discount,
@@ -78,7 +81,7 @@ class OrderController extends Controller
           
         }
         
-        //Create Product
+        //Create Sales
         else{
            $employeeId = auth()->user()->id;
 
@@ -94,11 +97,11 @@ class OrderController extends Controller
 
             ]);   
             
-            foreach ($request->product as $key => $value) {   
+            foreach ($request->Sales as $key => $value) {   
                 OrderItem::Create(
                     [
                         'order_id' =>   $order->id,
-                        'product_id' =>  $request->product[$key],
+                        'Sales_id' =>  $request->Sales[$key],
                         'quantity' =>  $request->quantity[$key] ?? 1,
                         'price' =>  $request->price[$key] ?? 0,
                         'discount' => $request->discount[$key] ?? 0,
@@ -120,6 +123,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('canSales');
         $order=Order::find($id);
        return view('admin.order.show',
                    ['order'=>$order,
@@ -135,13 +139,14 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('canSales');
         $order=Order::find($id);
-        $products=Product::all();
+        $Saless=Sales::all();
         $clients=Client::all();
 
        return view('admin.purchaseOrder.edit',
                    ['order'=>$order,
-                   'products'=>$products,
+                   'Saless'=>$Saless,
                     'clients'=>$clients,
                    'items'=>$order->orderItems
                     ]);
@@ -156,6 +161,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('canSales');
        //Delete Order Items
        if(isset($request->destroy)){
             foreach ($request->destroy as $key => $value) { 
@@ -171,13 +177,13 @@ class OrderController extends Controller
                                          'Status'=>$request->input('status'),
                                         ]);
 
-        if(isset($request->product)){
-             foreach ($request->product as $key => $value) {   
+        if(isset($request->Sales)){
+             foreach ($request->Sales as $key => $value) {   
                 OrderItem::updateOrCreate(
                     ['id'=>$request->id[$key]],
                     [
                         'order_id' =>   $id,
-                        'product_id' =>  $request->product[$key],
+                        'Sales_id' =>  $request->Sales[$key],
                         'quantity' =>  $request->quantity[$key] ?? 1,
                         'price' =>  $request->price[$key] ?? 0,
                         'discount' => $request->discount[$key] ?? 0,
@@ -198,6 +204,7 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('canSales');
         $order=Order::find($id);
         $order->delete();
 
@@ -212,6 +219,7 @@ class OrderController extends Controller
      // this function opens the PDF in browser. If we want, we can downlod
     public function openPDF($id)
     {
+        $this->authorize('canSales');
         $order = Order::find($id);
         $client=$order->client;
         $user=auth()->user();
@@ -234,6 +242,7 @@ class OrderController extends Controller
     // this function directly downloads the PDF. 
     public function savePDF($id)
     {
+        $this->authorize('canSales');
         $order = Order::find($id);
         $client=$order->client;
         $user=auth()->user();

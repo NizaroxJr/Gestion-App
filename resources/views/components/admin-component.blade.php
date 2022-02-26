@@ -21,7 +21,7 @@
   @yield('CustomStyles')
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
-  
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body class="hold-transition sidebar-mini" >
 <div class="wrapper">
@@ -181,7 +181,7 @@
           <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"></a>
+          <a href="#" class="d-block">{{Auth::user()->email}}</a>
         </div>
       </div>
 
@@ -197,6 +197,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              @can('canProduct')
               <li class="nav-item">
                 <a href="{{route('products.index')}}" class="nav-link">
                   <i class="nav-icon fab fa-product-hunt "></i>
@@ -204,18 +205,23 @@
                 </a>
                </li>
               </li>
+              @endcan
+              @can('canCategory')
               <li class="nav-item">
                 <a href="{{route('category.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categories</p>
                 </a>
               </li>
+              @endcan
+              @can('canWarehouse')
               <li class="nav-item">
                 <a href="{{route('warehouse.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Warehouses</p>
                 </a>
               </li>
+              @endcan
             </ul>
           </li>
           <li class="nav-item menu-open">
@@ -226,26 +232,30 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+            @can('canSales')
               <li class="nav-item">
                 <a href="{{route('order.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                     <p>Sales Orders</p>
                 </a>
                </li>
+              @endcan
+               @can('canInvoice')
                <li class="nav-item">
                 <a href="{{route('invoice.index')}}" class="nav-link">
                   <i class="fas fa-file-invoice nav-icon"></i>
                     <p>Invoices</p>
                 </a>
                </li>
+               @endcan
+               @can('canClient')
                <li class="nav-item">
                 <a href="{{route('client.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Clients</p>
                 </a>
               </li>
-              
-              </li>
+              @endcan
             </ul>
           </li>
           <li class="nav-item menu-open">
@@ -256,28 +266,43 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              @can('canPurchase')
                <li class="nav-item">
                 <a href="{{route('purchaseOrder.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                     <p>Purchase Orders</p>
                 </a>
                </li>
+               @endcan
+               @can('canBill')
                <li class="nav-item">
                 <a href="{{route('bill.index')}}" class="nav-link">
                   <i class="fas fa-file-invoice-dollar nav-icon"></i>
                     <p>Bills</p>
                 </a>
                </li>
+               @endcan
+               @can('canSupplier')
                <li class="nav-item">
                 <a href="{{route('supplier.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Suppliers</p>
                 </a>
               </li>
-              </li>
+              @endcan
             </ul>
           </li>
-          
+          @can('canUser')
+          <li class="nav-item menu-open">
+            <a href="{{route('users.index')}}" class="nav-link ">
+              <i class="fas fa-user-plus nav-icon"></i>
+              <p>
+                users
+              </p>
+            </a>
+          </li>
+          @endcan
+          @can('canRole')
            <li class="nav-item menu-open">
             <a href="{{route('roles.index')}}" class="nav-link ">
               <i class="fas fa-user-tag nav-icon"></i>
@@ -286,6 +311,17 @@
               </p>
             </a>
           </li> 
+          @endcan
+          @can('canSubscribe')
+           <li class="nav-item menu-open">
+            <a href="{{route('plans')}}" class="nav-link ">
+              <i class="fas fa-dollar-sign nav-icon"></i>
+              <p>
+                Subscription
+              </p>
+            </a>
+          </li>
+          @endcan 
           <!--Logout -->
           <li class="nav-item">
             

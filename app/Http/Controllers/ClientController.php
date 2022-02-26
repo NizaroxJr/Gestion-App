@@ -14,6 +14,7 @@ class ClientController extends Controller
      */
     public function index()
     {
+        $this->authorize('canClient');
         $clients=Client::all();
         return view('admin.client.index',['clients'=> $clients]);
     }
@@ -25,6 +26,7 @@ class ClientController extends Controller
      */
     public function create()
     {
+        $this->authorize('canClient');
         return view('admin.client.add');
     }
 
@@ -36,6 +38,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('canClient');
         $client=client::create($request->all());
         return redirect()->route('client.index');
     }
@@ -59,6 +62,7 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('canClient');
         $client=Client::find($id);
         return view('admin.client.edit',compact('client'));
     }   
@@ -72,6 +76,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('canClient');
         Client::where('id', $id)->update(['Name'=>$request->input('Name'),
                                           'phone'=>$request->input('phone'),
                                           'email'=>$request->input('email'),
@@ -89,6 +94,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('canClient');
         Client::where('id', $id)->delete();
         return redirect()->route('client.index');
     }

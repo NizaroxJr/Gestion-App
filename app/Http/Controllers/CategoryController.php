@@ -15,6 +15,7 @@ class CategoryController extends Controller
     public function index()
     { 
         
+        $this->authorize('canCategory');
         $categories=Category::all();
         return view('admin.category.index',compact('categories'));
     }
@@ -26,6 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize('canCategory');
       $categories=Category::all();
       return view('admin.category.add',compact('categories'));
 
@@ -40,6 +42,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         
+        $this->authorize('canCategory');
         $category=Category::create($request->all());
         return redirect()->route('category.index');
     }
@@ -64,6 +67,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
 
+        $this->authorize('canCategory');
         $category=Category::find($id);
         $categories=Category::all();
         
@@ -79,6 +83,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('canCategory');
         Category::where('id', $id)->update(['name'=>$request->input('name'),
                                           'slug'=>$request->input('slug'),
                                           'status'=>$request->input('status')
@@ -94,6 +99,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('canCategory');
         Category::where('id', $id)->delete();
         return redirect()->route('category.index');
     }

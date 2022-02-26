@@ -14,6 +14,8 @@ class WarehouseController extends Controller
      */
     public function index()
     {
+        
+        $this->authorize('canWarehouse');
         $warehouses=Warehouse::all();
         return view('admin.warehouse.index',['warehouses'=> $warehouses]);
     }
@@ -25,6 +27,7 @@ class WarehouseController extends Controller
      */
     public function create()
     {
+        $this->authorize('canWarehouse');
          return view('admin.warehouse.add');
     }
 
@@ -36,6 +39,8 @@ class WarehouseController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('canWarehouse');
+        $this->authorize('canAddWarehouse');
         $warehouse=Warehouse::create($request->all());
         return redirect()->route('warehouse.index');
     }
@@ -59,6 +64,7 @@ class WarehouseController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('canWarehouse');
         $warehouse=Warehouse::find($id); 
         return view('admin.warehouse.edit',compact('warehouse'));
     }
@@ -72,6 +78,7 @@ class WarehouseController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('canWarehouse');
         Warehouse::where('id', $id)->update(['name'=>$request->input('name'),
                                              'street1'=>$request->input('street1'),
                                              'street2'=>$request->input('street2'),
@@ -93,6 +100,7 @@ class WarehouseController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('canWarehouse');
         Warehouse::where('id', $id)->delete();
         return redirect()->route('warehouse.index');
     }

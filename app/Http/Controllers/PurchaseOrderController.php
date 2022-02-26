@@ -19,6 +19,7 @@ class PurchaseOrderController extends Controller
      */
     public function index()
     {
+        $this->authorize('canPurchase');
         $orders=Order::whereNull('client_id')->get();
         return view('admin.purchaseOrder.index',['orders'=> $orders]);
     }
@@ -30,6 +31,7 @@ class PurchaseOrderController extends Controller
      */
     public function create()
     {   
+        $this->authorize('canPurchase');
         $products=Product::all();
         $suppliers=Supplier::all();
         return view('admin.purchaseOrder.add',compact('products','suppliers'));
@@ -43,6 +45,7 @@ class PurchaseOrderController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('canPurchase');
         //Clone Product
         if($request->input('id')){
             $cloneOrder=Order::find($request->input('id'));
@@ -116,6 +119,7 @@ class PurchaseOrderController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('canPurchase');
         $order=Order::find($id);
        return view('admin.purchaseOrder.show',
                    ['order'=>$order,
@@ -131,6 +135,7 @@ class PurchaseOrderController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('canPurchase');
         $order=Order::find($id);
         $products=Product::all();
         $suppliers=Supplier::all();
@@ -152,6 +157,7 @@ class PurchaseOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('canPurchase');
        //Delete Order Items
        if(isset($request->destroy)){
             foreach ($request->destroy as $key => $value) { 
@@ -194,6 +200,7 @@ class PurchaseOrderController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('canPurchase');
         $order=Order::find($id);
         $order->delete();
 

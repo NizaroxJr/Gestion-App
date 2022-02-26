@@ -17,6 +17,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        $this->authorize('canProduct');
         $products=Product::all();
 
         return view('admin.products.index',['products'=> $products]);
@@ -29,6 +30,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
+        $this->authorize('canProduct');
         $suppliers=Supplier::all();
         $categories=Category::all();
 
@@ -43,6 +45,8 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('canProduct');
+        $this->authorize('canAddProduct');
         //Clone Product
         if($request->input('id')){
             $cloneProduct=Product::find($request->input('id'));
@@ -98,6 +102,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('canProduct');
         $product=Product::find($id);
 
        return view('admin.products.show',
@@ -115,6 +120,7 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('canProduct');
         $product=Product::find($id);
         $suppliers=Supplier::all();
         $categories=Category::all();
@@ -136,6 +142,7 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('canProduct');
         //Persist Image To DB
         $input = $request->all();
 
@@ -168,7 +175,7 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        
+        $this->authorize('canProduct');
         Product::where('id', $id)->delete();
         return redirect()->route('products.index');
     }

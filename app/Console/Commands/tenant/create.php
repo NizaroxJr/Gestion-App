@@ -60,4 +60,6 @@ class create extends Command
         app(HostnameRepository::class)->attach($hostname, $website);
 
     }
+
+    
 }

@@ -15,6 +15,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
+        $this->authorize('canSupplier');
         $suppliers=Supplier::all();
         return view('admin.supplier.index',compact('suppliers'));
     }
@@ -26,6 +27,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
+        $this->authorize('canSupplier');
       return view('admin.supplier.add');
     }
 
@@ -37,6 +39,8 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('canSupplier');
+        $this->authorize('canAddSupplier');
         $supplier=Supplier::create($request->all());
         return redirect()->route('supplier.index');
     }
@@ -60,6 +64,7 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('canSupplier');
         $supplier=Supplier::find($id);
         
         return view('admin.supplier.edit',compact('supplier'));
@@ -74,6 +79,7 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('canSupplier');
         Supplier::where('id', $id)->update(['name'=>$request->input('name'),
                                           'tel'=>$request->input('tel'),
                                           'email'=>$request->input('email'),
@@ -90,6 +96,7 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('canSupplier');
         Supplier::where('id', $id)->delete();
         return redirect()->route('supplier.index');
     }

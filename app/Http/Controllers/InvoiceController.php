@@ -16,6 +16,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        $this->authorize('canInvoice');
         $invoices=Invoice::all();
         return view('admin.invoice.index',['invoices'=> $invoices]);
     }
@@ -27,6 +28,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
+        $this->authorize('canInvoice');
         $orders=Order::whereNull('supplier_id')->get();
         return view('admin.invoice.add',compact('orders'));
     }
@@ -39,6 +41,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('canInvoice');
         //Clone Product
         if($request->input('id')){
             $cloneinvoice=Invoice::find($request->input('id'));
@@ -78,6 +81,7 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('canInvoice');
         $invoice=Invoice::find($id);
        return view('admin.invoice.show',
                    [
@@ -93,6 +97,7 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('canInvoice');
        $invoice=Invoice::find($id);
        $orders=Order::whereNull('supplier_id')->get();
        return view('admin.invoice.edit',
@@ -110,6 +115,7 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('canInvoice');
         Invoice::where('id', $id)->update(['order_id'=>$request->input('orderID'),
                                            'description'=>$request->input('description'),
                                            'Status'=>$request->input('status'),
@@ -129,6 +135,7 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('canInvoice');
         Invoice::where('id',$id)->delete();
         return redirect()->route('invoice.index');
     }

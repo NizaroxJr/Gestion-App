@@ -10,6 +10,10 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\SubscriptionsPaymentController;
+use App\Http\Controllers\PlanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,12 +29,12 @@ Route::group(['middleware' => ['web','tenancy.enforce']], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('admin');
 });
 
-Route::group(['middleware' => ['web','auth', 'tenancy.enforce']], function() {
+Route::group(['middleware' => ['web','auth', 'tenancy.enforce','subscribed']], function() {
     $host = request()->getHttpHost();
     return view('tenants.admin',['host'=>$host]);
 });
 
-Route::group(['middleware' => ['web','auth', 'tenancy.enforce']], function() {
+Route::group(['middleware' => ['web','auth', 'tenancy.enforce','subscribed']], function() {
    //Inventory Routes
    Route::resource('products',ProductsController::class);
    Route::resource('category',CategoryController::class);
@@ -57,6 +61,21 @@ Route::group(['middleware' => ['web','auth', 'tenancy.enforce']], function() {
    Route::get('/bill/viewpdf/{id}', [BillController::class, 'openPDF']);
    Route::get('/bill/get/{id1}', [BillController::class, 'ajaxAdd']);
    Route::get('/bill/{id1}/get/{id2}', [BillController::class, 'ajaxEdit']);
-  //Roles Routes
-   Route::resource('roles',RoleController::class);   
+   //Roles Routes
+   Route::resource('roles',RoleController::class);
+   //Users Routes
+   Route::resource('users',UserController::class);
+   
+  
+});
+
+Route::group(['middleware' => ['web','auth', 'tenancy.enforce']], function() {
+
+//Subscritpion Routes
+   Route::get('/plans', [SubscriptionController::class,'index'])->name('plans');
+   Route::get('/plan/cancel', [SubscriptionController::class,'cancel'])->name('plan/cancel');
+   Route::get('/plan/resume', [SubscriptionController::class,'resume'])->name('plan/resume');
+   Route::get('/payments', [SubscriptionsPaymentController::class,'index'])->name('payments');
+   Route::post('/payments', [SubscriptionsPaymentController::class,'store'])->name('payments.store');
+
 });

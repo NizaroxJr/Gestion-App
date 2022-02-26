@@ -18,6 +18,7 @@ class BillController extends Controller
      */
     public function index()
     {
+        $this->authorize('canBill');
         $bills=Bill::all();
         return view('admin.bill.index',['bills'=> $bills]);
     }
@@ -29,6 +30,7 @@ class BillController extends Controller
      */
     public function create()
     {
+        $this->authorize('canBill');
         $orders=Order::whereNull('client_id')->get();
         return view('admin.bill.add',compact('orders'));
     }
@@ -41,6 +43,7 @@ class BillController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('canBill');
         //Clone Product
         if($request->input('id')){
             $clonebill=bill::find($request->input('id'));
@@ -80,6 +83,7 @@ class BillController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('canBill');
        $bill=bill::find($id);
        return view('admin.bill.show',
                    [
@@ -95,6 +99,7 @@ class BillController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('canBill');
        $bill=bill::find($id);
        $orders=Order::whereNull('client_id')->get();
        return view('admin.bill.edit',
@@ -112,6 +117,7 @@ class BillController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('canBill');
         bill::where('id', $id)->update(['order_id'=>$request->input('orderID'),
                                            'description'=>$request->input('description'),
                                            'Status'=>$request->input('status'),
@@ -131,6 +137,7 @@ class BillController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('canBill');
         bill::where('id',$id)->delete();
         return redirect()->route('bill.index');
     }
