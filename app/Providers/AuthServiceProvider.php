@@ -125,6 +125,12 @@ class AuthServiceProvider extends ServiceProvider
                return true;
             }
             return false;
+        }); 
+        Gate::define('canDashboard', function ($user){
+            if(!$user->parent()->get()->count()){
+               return true;
+            }
+            return false;
         });   
     }
 }

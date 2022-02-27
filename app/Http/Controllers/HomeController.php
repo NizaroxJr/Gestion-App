@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Models\Bill;
+use App\Models\User;
+use App\Models\Supplier;
+use App\Models\Warehouse;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -24,6 +30,17 @@ class HomeController extends Controller
     public function index()
     {
         $host = request()->getHttpHost();
-        return view('tenants.admin',['host'=>$host]);
+        $orders = Order::all()->count();
+        $salesOrders = Order::whereNull('supplier_id')->get()->count();
+        $purchaseOrders = Order::whereNull('client_id')->get()->count();
+        $paidBills = Bill::where('Status','=','Paid')->get()->count();
+        $unpaidBills = Bill::where('Status','=','Pending')->get()->count();
+        $notShippedBills = Order::where('Status','=','Not Shipped')->get()->count();
+        $users = User::all()->count();
+        $suppliers = Supplier::all()->count();
+        $products = Product::all()->count();
+        $warehouses = Warehouse::all()->count();
+        
+        return view('tenants.admin',compact('users','suppliers','products','warehouses','orders','salesOrders','purchaseOrders','paidBills','unpaidBills','notShippedBills'));
     }
 }
